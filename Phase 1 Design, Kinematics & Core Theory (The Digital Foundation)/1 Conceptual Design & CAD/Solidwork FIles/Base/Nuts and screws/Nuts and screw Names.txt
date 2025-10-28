@@ -1,1 +1,15 @@
 4* socket head cap screw_iso (ISO 4762 M8 * 70 - 28N)
+8* Hex Nut style 1 Gradeab_iso (ISO - 4032 - M8 - D - N)
+
+
+1* Hex bolt gradeab_iso (ISO 4014 - M8 *80 *80-N)
+3* hex nut style 1 gradeab_iso (Iso - 4032 - M8 - D -N ) 
+
+
+for placement of stepper motor
+4* socket head cap screw_iso (ISO 4762 M3 *10 -N)
+
+
+
+
+
