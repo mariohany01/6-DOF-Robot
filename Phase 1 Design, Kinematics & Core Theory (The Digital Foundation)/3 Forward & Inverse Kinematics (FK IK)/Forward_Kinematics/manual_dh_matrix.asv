@@ -1,0 +1,40 @@
+function T_total = manual_dh_matrix(dh_table)
+% manual_dh_matrix Calculates the total transformation matrix from a DH table.
+%
+% INPUT:
+%   dh_table - An Nx4 symbolic matrix where each row is [theta, d, a, alpha].
+%
+% OUTPUT:
+%   T_total  - The 4x4 symbolic total transformation matrix (T_0_N).
+
+    % Get the number of links (rows in the table)
+    num_links = size(dh_table, 1);
+    Array_of_All_Matrix = cell(1,num_links);
+
+    % Initialize the total transformation matrix to the identity.
+    % We must use sym(eye(4)) for symbolic calculations.
+    T_total = sym(eye(4));
+    
+    % Loop through each link (each row of the DH table)
+    for i = 1:num_links
+        % Extract parameters for the current link
+        theta = dh_table(i, 1);
+        d     = dh_table(i, 2);
+        a     = dh_table(i, 3);
+        alpha = dh_table(i, 4);
+        
+        % Calculate the transformation matrix for this single link
+        trans = [
+            cos(theta), -sin(theta)*cos(alpha),  sin(theta)*sin(alpha), a*cos(theta);
+            sin(theta),  cos(theta)*cos(alpha), -cos(theta)*sin(alpha), a*sin(theta);
+            0,           sin(alpha),             cos(alpha),            d;
+            0,           0,                      0,                     1
+        ];
+        
+        % Post-multiply the total matrix by the new link matrix
+        % T_total = T_total * T_link;
+        % T(0->N) = T(0->1) * T(1->2) * ... * T(N-1 -> N)
+        Array_of_All_Matrix{i} = trans;
+    end
+    
+end

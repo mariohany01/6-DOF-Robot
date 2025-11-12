@@ -1,0 +1,90 @@
+function [Num_T_final, Num_euler_ZYX, Num_fk_map,dh_table] = Num_calculate_robot_kinematics()
+% calculate_robot_kinematics Performs symbolic forward kinematics for a 6-DOF arm.
+%
+% OUTPUTS:
+%   T_final_simple - The 4x4 symbolic simplified transformation matrix.
+%   euler_ZYX      - A struct containing the symbolic ZYX Euler angles.
+%   fk_map         - A dictionary mapping element names ('r11', 'px', etc.)
+%                    to their symbolic expressions.
+%% --- 1. Define Variables ---
+a1 = 37.2;
+a2 = 138.10;
+a3 = 28.2;
+d1 = 135.80;
+d2 = 160;
+d3 = 15;                       % Link parameters
+%% --- 2. Define DH Parameters ---
+% The DH parameter table: [theta, d, a, alpha]
+dh_table = [
+    0,        d1,   a1,   pi/2;
+    pi/2,   0,    a2,   -pi;
+    0,        0,    a3,   -pi/2;
+    0,        d2,   0,    pi/2;
+    0,        0,    0,    -pi/2;
+    0,        d3,   0,    0
+];
+%% --- 3. Calculate Forward Kinematics ---
+% Call the helper function to get the total transformation matrix
+Num_T_final = manual_dh_matrix(dh_table);
+
+
+
+%% --- 4. Clean Small Values (Numerical Error Elimination) ---
+% Set tolerance for what constitutes "small" (adjustable)
+tolerance = 1e-10;
+
+% Apply cleanup to the transformation matrix
+Num_T_final = cleanup_small_values(Num_T_final, tolerance);
+
+
+
+%% --- 5. Extract Elements into a Map (The "Clean" Way) ---
+% No loops, no dummy variables. Just create the keys and values directly.
+T = Num_T_final; % Use a short alias for convenience
+keys = [
+"r11", "r12", "r13", "px", ...
+"r21", "r22", "r23", "py", ...
+"r31", "r32", "r33", "pz"
+];
+values = [
+    T(1,1), T(1,2), T(1,3), T(1,4), ...
+    T(2,1), T(2,2), T(2,3), T(2,4), ...
+    T(3,1), T(3,2), T(3,3), T(3,4)
+];
+Num_fk_map = dictionary(keys, values);
+%% --- 6. Calculate ZYX Euler Angles ---
+% We can access the map, or just use the matrix elements directly.
+% Using the map makes the formulas very readable.
+% Yaw-Pitch-Roll (ZYX) convention
+yaw_rad   = atan2(Num_fk_map('r23'), Num_fk_map('r13'));
+pitch_rad = atan2(sqrt(1 - Num_fk_map('r33')^2), Num_fk_map('r33'));
+roll_rad  = atan2(Num_fk_map('r32'), -Num_fk_map('r31'));
+
+yaw   = cleanup_small_values(rad2deg(yaw_rad), tolerance);
+pitch = cleanup_small_values(rad2deg(pitch_rad), tolerance);
+roll  = cleanup_small_values(rad2deg(roll_rad), tolerance);
+
+% Store in a struct for a clean return value
+Num_euler_ZYX = struct('Yaw_Z', yaw, 'Pitch_Y', pitch, 'Roll_X', roll);
+end
+
+
+%% --- Helper Function: Clean Small Values ---
+function cleaned = cleanup_small_values(matrix, tol)
+% cleanup_small_values Sets values smaller than tolerance to zero
+%
+% INPUTS:
+%   matrix - Input matrix or scalar
+%   tol    - Tolerance threshold (default: 1e-10)
+%
+% OUTPUT:
+%   cleaned - Matrix with small values set to zero
+
+if nargin < 2
+    tol = 1e-10;
+end
+
+% Set values with absolute value less than tolerance to zero
+cleaned = matrix;
+cleaned(abs(matrix) < tol) = 0;
+end

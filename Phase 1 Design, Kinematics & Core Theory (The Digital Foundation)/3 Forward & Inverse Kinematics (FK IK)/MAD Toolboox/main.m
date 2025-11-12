@@ -45,9 +45,6 @@ end
 disp(myDict('pz'));
 
 
-
-
 yaw = atan2(myDict('r23'), myDict('r13'));
 pitch = atan2(sqrt(1 - myDict('r33')^2), myDict('r33'));
 roll = atan2(myDict('r32'), -myDict('r31'));
-
