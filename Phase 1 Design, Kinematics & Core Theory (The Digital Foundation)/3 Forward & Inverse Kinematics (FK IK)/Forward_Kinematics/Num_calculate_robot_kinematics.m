@@ -7,21 +7,24 @@ function [Num_T_final, Num_euler_ZYX, Num_fk_map,dh_table] = Num_calculate_robot
 %   fk_map         - A dictionary mapping element names ('r11', 'px', etc.)
 %                    to their symbolic expressions.
 %% --- 1. Define Variables ---
-a1 = 37.2;
-a2 = 138.10;
-a3 = 28.2;
+
+a1 = 37.5;
+a2 = 160;
+a3 = 15;
 d1 = 135.80;
-d2 = 160;
-d3 = 15;                       % Link parameters
+d2 = 138.1;
+d3 = 28.2;
+    
+% Link parameters
 %% --- 2. Define DH Parameters ---
 % The DH parameter table: [theta, d, a, alpha]
 dh_table = [
-    0,        d1,   a1,   pi/2;
+    pi/2,        d1,   a1,   pi/2;
     pi/2,   0,    a2,   -pi;
-    0,        0,    a3,   -pi/2;
-    0,        d2,   0,    pi/2;
-    0,        0,    0,    -pi/2;
-    0,        d3,   0,    0
+    pi/2,        0,    a3,   -pi/2;
+    pi/2,        d2,   0,    pi/2;
+    pi/2,        0,    0,    -pi/2;
+    pi/2,        d3,   0,    0
 ];
 %% --- 3. Calculate Forward Kinematics ---
 % Call the helper function to get the total transformation matrix
