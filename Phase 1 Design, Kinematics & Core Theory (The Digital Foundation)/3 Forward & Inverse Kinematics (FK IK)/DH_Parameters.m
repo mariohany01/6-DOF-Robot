@@ -5,23 +5,23 @@ close all;   % Close all figures
 
 
 % Links Parameters
-a1 = 175;
-a2 = 890;
-a3 = 50;
-d1 = 575;
-d2 = 1035;
-d3 = 185;  
+%a1 = 175;
+%a2 = 890;
+%a3 = 50;
+%d1 = 575;
+%d2 = 1035;
+%d3 = 185;  
 
 
 % Links Parameters
-%a1 = 37.5;
-%a2 = 160;
-%a3 = 15;
-%d1 = 135.80;
-%d2 = 138.1;
-%d3 = 28.2;   
+a1 = 37.5;
+a2 = 160;
+a3 = 15;
+d1 = 135.80;
+d2 = 138.1;
+d3 = 28.2;   
 
-%%
+%% Rsearch Robot
 % Link([theta, d, a, alpha])
 
 L(1) = Link([0      d1     a1        pi/2]); 
@@ -30,6 +30,7 @@ L(3) = Link([0      0      a3       -pi/2]); % REVOLUTE. (If you want prismatic,
 L(4) = Link([0      d2     0        pi/2]);
 L(5) = Link([0      0      0        -pi/2]);
 L(6) = Link([0      d3     0        0]);     % d3 is the offset here
+
 
 Rob = SerialLink(L, 'name', 'RRRRR');
 q = [0 pi/2 0 0 0 0];

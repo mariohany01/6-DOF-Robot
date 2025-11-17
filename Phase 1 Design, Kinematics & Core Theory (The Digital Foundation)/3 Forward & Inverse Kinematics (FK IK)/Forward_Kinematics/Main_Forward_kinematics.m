@@ -38,6 +38,30 @@ disp(kinematics_map('px'));
 disp(kinematics_map('py'));
 disp(kinematics_map('pz'));
 
+fprintf('A1\n');
+disp(A1);
+fprintf('A2\n');
+disp(A2);
+fprintf('A3\n');
+disp(A3);
+fprintf('A4\n');
+disp(A4);
+fprintf('A5\n');
+disp(A5);
+fprintf('A6\n');
+disp(A6);
+
+A03=A1*A2*A3;
+
+fprintf('A03\n');
+disp(A03);
+
+A46=A4*A5*A6;
+fprintf('A46\n');
+disp(A46);
+
+
+
 %% Numerical Values 
 
 [Num_T_final, Num_euler_ZYX, Num_fk_map,dh_table] = Num_calculate_robot_kinematics();
@@ -60,9 +84,23 @@ fprintf('==================================================\n');
 Translation = [Num_fk_map('px'); Num_fk_map('py'); Num_fk_map('pz')];
 disp(Translation);
 
+fprintf('A1\n');
+disp(A1);
+fprintf('A2\n');
+disp(A2);
+fprintf('A3\n');
+disp(A3);
+
+A03=A1*A2*A3;
+
+fprintf('A03\n');
+disp(A03);
+
 
 
 %% Plot The Robot
 Rob = SerialLink(dh_table, 'name', 'RRRRR')
 q = dh_table(:, 1)';
 Rob.plot(q, 'workspace', [-400 400 -400 400 -1 500]);
+
+

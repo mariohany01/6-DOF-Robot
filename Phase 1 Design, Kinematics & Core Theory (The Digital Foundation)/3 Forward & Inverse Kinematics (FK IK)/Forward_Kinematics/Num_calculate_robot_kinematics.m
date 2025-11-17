@@ -18,13 +18,14 @@ d3 = 28.2;
 % Link parameters
 %% --- 2. Define DH Parameters ---
 % The DH parameter table: [theta, d, a, alpha]
+%Random pose 23 52 80 35 15 17
 dh_table = [
-    pi/2,        d1,   a1,   pi/2;
-    pi/2,   0,    a2,   -pi;
-    pi/2,        0,    a3,   -pi/2;
-    pi/2,        d2,   0,    pi/2;
-    pi/2,        0,    0,    -pi/2;
-    pi/2,        d3,   0,    0
+    179*(pi/180),        d1,    a1,    pi/2;
+    -22*(pi/180),        0,    a2,   -  pi;
+    17*(pi/180),         0,    a3,   -pi/2;
+    50*(pi/180),        d2,     0,    pi/2;
+    113*(pi/180),         0,     0,   -pi/2;
+    109*(pi/180),        d3,     0,       0
 ];
 %% --- 3. Calculate Forward Kinematics ---
 % Call the helper function to get the total transformation matrix
