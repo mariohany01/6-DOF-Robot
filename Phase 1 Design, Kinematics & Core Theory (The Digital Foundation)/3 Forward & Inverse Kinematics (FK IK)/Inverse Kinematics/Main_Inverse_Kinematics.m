@@ -61,13 +61,18 @@ d3 = 28.2;
 
 % Desired End-Effector Pose (4x4 Homogeneous Transformation Matrix)
 % Example: Robot zero pose (0, 90, 0, 0, 0, 0)
+%Num_T_final = [
+%    0         0         1.0000  203.8000;
+%    0         -1.0000   0        0;
+%    1.0000    0         0       310.8000;
+%    0         0         0       1.0000
+%];
 Num_T_final = [
-    0         0    1.0000  203.8000;
-    0   -1.0000         0         0;
-    1.0000         0         0  310.8000;
-    0         0         0    1.0000
+    0.7202   -0.0200    0.6935 -244.3321;
+    0.6928    0.0741   -0.7174  -15.6234;
+   -0.0370    0.9971    0.0672  -37.1346;
+         0         0         0    1.0000;
 ];
-
 % --- INVERSE KINEMATICS CALCULATIONS ---
 fprintf('==================================================\n');
 fprintf('Inverse Kinematics:\n');

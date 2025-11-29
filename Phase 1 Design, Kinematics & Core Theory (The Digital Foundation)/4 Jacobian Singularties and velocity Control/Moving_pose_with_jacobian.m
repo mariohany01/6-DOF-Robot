@@ -43,34 +43,38 @@ T1_translation = transl(T1);
 disp(T1_translation);
 
 disp("================================")
-disp("Calcul ate the whole drivative")
+disp("Calculate the whole drivative")
 dT_dq1=(T1-T0)/dq1;
 disp(dT_dq1)
 
 disp("================================")
 disp("Find Translation ")
-dT_dq1_transl = dT_dq1(1:3, 4);
-disp(dT_dq1_transl)
+dt_dq1 = dT_dq1(1:3, 4);
+disp("Translation Vector for q1")
+
+disp(dt_dq1)
 
 %% Rotation Part
-
-dR_q1=dT_dq1(1:3,1:3);
+disp("================================")
+disp("Find Rotation ")
+dr_dq1=dT_dq1(1:3,1:3);
 
 disp("dR_q1")
-disp(dR_q1);
+disp(dr_dq1);
 
 R=T0_d(1:3,1:3);
-disp("R")
+disp("Rotation matrix from T0")
 disp(R);
 
-S=dR_q1*inv(R);
+S=dr_dq1*inv(R);
 disp("S")
 disp(S);
 
-Lesgo=vex(S);
-disp("Lesgo")
-disp(Lesgo);
+omega_Vector=vex(S);
+disp("Omega Vector for q1")
+disp(omega_Vector);
 
-j1=[dT_dq1_transl;Lesgo];
-disp("j1")
+disp("================================")
+disp("j1 Vector ")
+j1=[dt_dq1;omega_Vector];
 disp(j1);
