@@ -23,19 +23,26 @@ d3 = 28.2;
 
 %% Rsearch Robot
 % Link([theta, d, a, alpha])
-
 L(1) = Link([0      d1     a1        pi/2]); 
-L(2) = Link([pi/2   0      a2       -pi]);   % Note: pi/2 is a constant offset here
-L(3) = Link([0      0      a3       -pi/2]); % REVOLUTE. (If you want prismatic, add 1 at the end)
+L(2) = Link([pi/2   0      a2       -pi]);  
+L(3) = Link([0      0      a3       -pi/2]); 
 L(4) = Link([0      d2     0        pi/2]);
 L(5) = Link([0      0      0        -pi/2]);
-L(6) = Link([0      d3     0        0]);     % d3 is the offset here
+L(6) = Link([0      d3     0        0]);   
+
+%this is not my robot config but its another right config for my robot
+%L(1) = Link([0      d1     a1        -pi/2]); 
+%L(2) = Link([-pi/2   0      a2       0]);   
+%L(3) = Link([0      0      a3       pi/2]); 
+%L(4) = Link([0      -d2     0        -pi/2]);
+%L(5) = Link([0      0      0        pi/2]);
+%L(6) = Link([0      -d3     0        pi]);     
 
 
 Rob = SerialLink(L, 'name', 'RRRRR');
-q = [0 pi/2 0 0 0 0];
+q = [0 -pi/2 0 0 0 0];
 % q = [30*pi/180 -45*pi/180 0.2 60*pi/180 20*pi/180 90*pi/180];
-Rob.plot(q, 'workspace', [-2000 2000 -2000 2000 -1 2000]);
+Rob.plot(q, 'workspace', [-400 400 -400 400 -1 400], 'scale', 0.5);
 T = Rob.fkine(q);
 
 % Eliminate very small values from T (set values below threshold to 0)
@@ -45,7 +52,7 @@ T = Rob.fkine(q);
 disp(T);
 
 % Sliders
- Rob.teach;
+%Rob.teach;
 
 
 eul_zyz_rad = tr2eul(T);
